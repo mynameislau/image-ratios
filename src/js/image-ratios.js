@@ -8,7 +8,7 @@ const target = document.body;
 const ratios = [
   { name: '1-1', value: 1 },
   { name: '16-9', value: 16 / 9 },
-  { name: '4-3', value: 3 / 4 }
+  { name: '4-3', value: 4 / 3 }
 ];
 
 // Create an observer instance
