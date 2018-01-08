@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'lib'),
     filename: 'image-ratios.js',
-    library: 'image-ratios',
+    library: 'imageRatios',
     libraryTarget: 'umd'
   },
   devtool: 'source-map',
