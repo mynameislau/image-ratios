@@ -39,6 +39,9 @@ const calculateRatios = ratios => {
 };
 
 export const startDetecting = (ratios = defaultRatios) => {
+  if (!window.MutationObserver) {
+    return;
+  }
   const observer = new MutationObserver(mutations => {
     mutations.forEach(() => calculateRatios(ratios));
   });
@@ -47,6 +50,5 @@ export const startDetecting = (ratios = defaultRatios) => {
 
   calculateRatios(ratios);
 };
-
 
 export default startDetecting;
