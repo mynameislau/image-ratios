@@ -11,9 +11,9 @@ const defaultRatios = [
   { name: '4-3', value: 4 / 3 }
 ];
 
-const calculateRatios = ratios => {
+const calculateRatios = (imagesSelector, ratios) => {
   // Console.log(mutation.type);
-  const imgQuery = query('img:not([data-biggest-dimension])');
+  const imgQuery = query(`${imagesSelector}:not([data-biggest-dimension])`);
 
   imgQuery.forEach(image => {
     // Console.log('image !', image.getAttribute('src'));
@@ -38,17 +38,20 @@ const calculateRatios = ratios => {
   });
 };
 
-export const startDetecting = (ratios = defaultRatios) => {
+export const startDetecting = (options = {
+  imagesSelector: 'img',
+  ratios: defaultRatios
+}) => {
   if (!window.MutationObserver) {
     return;
   }
-  const observer = new MutationObserver(mutations => {
-    mutations.forEach(() => calculateRatios(ratios));
+  const observer = new MutationObserver(options.imagesSelector, mutations => {
+    mutations.forEach(() => calculateRatios(options.ratios));
   });
 
   observer.observe(target, { childList: true, subtree: true });
 
-  calculateRatios(ratios);
+  calculateRatios(options.ratios);
 };
 
 export default startDetecting;

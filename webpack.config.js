@@ -19,10 +19,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              'es2015',
-              'stage-0'
-            ]
+            presets: ['@babel/env']
           }
         }
       }
