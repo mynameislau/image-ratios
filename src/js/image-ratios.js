@@ -42,6 +42,10 @@ export const startDetecting = (options = {
   imagesSelector: 'img',
   ratios: defaultRatios
 }) => {
+
+  options.ratios = options.ratios || defaultRatios;
+  options.imagesSelector = options.imagesSelector || 'img';
+
   if (!window.MutationObserver) {
     return;
   }

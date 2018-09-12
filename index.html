@@ -13,7 +13,9 @@
   <img src="fox-crop-3.png"/>
   <script src="lib/image-ratios.js"></script>
   <script>
-    imageRatios.startDetecting();
+    imageRatios.startDetecting({
+      imagesSelector: 'img',
+    });
   </script>
 </body>
 
