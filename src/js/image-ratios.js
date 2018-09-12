@@ -45,13 +45,13 @@ export const startDetecting = (options = {
   if (!window.MutationObserver) {
     return;
   }
-  const observer = new MutationObserver(options.imagesSelector, mutations => {
-    mutations.forEach(() => calculateRatios(options.ratios));
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(() => calculateRatios(options.imagesSelector, options.ratios));
   });
 
   observer.observe(target, { childList: true, subtree: true });
 
-  calculateRatios(options.ratios);
+  calculateRatios(options.imagesSelector, options.ratios);
 };
 
 export default startDetecting;
