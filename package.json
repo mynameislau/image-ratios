@@ -1,6 +1,6 @@
 {
   "name": "image-ratios",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "calculating loaded image ratios",
   "main": "lib/image-ratios.js",
   "scripts": {

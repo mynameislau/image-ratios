@@ -11,30 +11,30 @@ const defaultRatios = [
   { name: '4-3', value: 4 / 3 }
 ];
 
-const calculateRatios = (imagesSelector, ratios) => {
+const calculateRatios = (image, ratios) => {
+  const imgWidth = image.naturalWidth;
+  const imgHeight = image.naturalHeight;
+
+  ratios.forEach(ratio => {
+    image.setAttribute(
+      `data-higher-than-ratio-${ratio.name}`,
+      imgWidth / imgHeight > ratio.value
+    );
+  });
+
+  image.setAttribute('data-biggest-dimension', imgHeight > imgWidth ? 'height' : 'width');
+}
+
+const setImagesDetection = (imagesSelector, ratios) => {
   // Console.log(mutation.type);
   const imgQuery = query(`${imagesSelector}:not([data-biggest-dimension])`);
 
   imgQuery.forEach(image => {
-    // Console.log('image !', image.getAttribute('src'));
-    const newImg = new Image();
+    calculateRatios(image, ratios);
 
-    newImg.addEventListener('load', () => {
-      const imgHeight = newImg.height;
-      const imgWidth = newImg.width;
-      // Console.log(`The image size is ${width}*${height}`);
-
-      ratios.forEach(ratio => {
-        image.setAttribute(
-          `data-higher-than-ratio-${ratio.name}`,
-          imgWidth / imgHeight > ratio.value
-        );
-      });
-
-      image.setAttribute('data-biggest-dimension', imgHeight > imgWidth ? 'height' : 'width');
+    image.addEventListener('load', () => {
+      calculateRatios(image, ratios);
     });
-
-    newImg.src = image.getAttribute('src');
   });
 };
 
@@ -50,12 +50,12 @@ export const startDetecting = (options = {
     return;
   }
   const observer = new MutationObserver(mutations => {
-    mutations.forEach(() => calculateRatios(options.imagesSelector, options.ratios));
+    mutations.forEach(() => setImagesDetection(options.imagesSelector, options.ratios));
   });
 
   observer.observe(target, { childList: true, subtree: true });
 
-  calculateRatios(options.imagesSelector, options.ratios);
+  setImagesDetection(options.imagesSelector, options.ratios);
 };
 
 export default startDetecting;
